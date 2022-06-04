@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('dashboard') ?>">
 				<div class="sidebar-brand-icon">
-				<img  class="fas" src="<?php echo base_url('/sb-admin/img/logo_sasay.png'); ?>" />	
+				<img  class="fas" src="<?php echo base_url('/sb-admin/img/logo_sample.png'); ?>" />	
 				</div>
 				<!-- <div class="sidebar-brand-text mx-3">Sasay</div> -->
 			</a>

@@ -41,7 +41,7 @@
 					</div>
 				<?php endif ?>
 				<div class="card shadow">
-					<div class="card-header"><strong>Daftar Barang</strong></div>
+					<div class="card-header"><strong>Daftar barang</strong></div>
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -50,18 +50,17 @@
 										<td>No</td>
 										<td>Nama Barang</td>
 										<td>Kode Barang</td>
-										<td>Nama Brand</td>
+										<td>Brand</td>
 										<td>Harga Beli</td>
 										<td>Harga Jual</td>
 										<td>Stok</td>
-										<!-- <td>Barcode</td> -->
 										<td>Aksi</td>
 									</tr>
 								</thead>
 								<tbody>
 									<?php foreach ($all_barang as $barang): ?>
 										<tr>
-											<td><?= ++$start ?></td>
+											<td><?= $no++?></td>
 											<td><?= $barang->nama_barang ?></td>
 											<td><?= $barang->kode_barang ?></td>
 											<td><?= $barang->nama_brand ?></td>
@@ -79,7 +78,6 @@
 								</tbody>
 							</table>
 						</div>
-						<?= $this->pagination->create_links(); ?>
 					</div>				
 				</div>
 				</div>
@@ -94,6 +92,10 @@
 	<!-- extension responsive -->
     <script src="<?= base_url('sb-admin') ?>/vendor/datatables/dataTables.responsive.min.js"></script>
 	<!-- Plugin Controler -->
-	<script src="<?= base_url('sb-admin/js/demo/datatables-no-pagination.js') ?>"></script>
+	<script src="<?= base_url('sb-admin/js/demo/datatables-demo.js') ?>"></script>
+	
 </body>
-</html>
+</html> 
+
+
+								

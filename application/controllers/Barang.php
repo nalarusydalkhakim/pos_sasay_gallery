@@ -14,18 +14,8 @@ class Barang extends CI_Controller{
 	public function index(){
 		$this->data['title'] = 'Data Barang';
 
-		//pagination
-		$this->load->library('pagination');
-
-		//congif
-		$config['base_url'] = 'http://localhost/ci_ghina_fashion/barang/index';
-		$config['total_rows'] = $this->m_barang->jumlah();
-		$config['per_page'] = 10;
-
-		$this->pagination->initialize($config);
-
-		$this->data['start'] = $this->uri->segment(3);
-		$this->data['all_barang'] = $this->m_barang->lihat_pagination($config['per_page'], $this->data['start']);
+		$this->data['all_barang'] = $this->m_barang->lihat();
+		$this->data['no'] = 1;
 
 		$this->load->view('barang/lihat', $this->data);
 	}
