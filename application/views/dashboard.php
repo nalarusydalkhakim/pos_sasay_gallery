@@ -422,7 +422,7 @@
 			pointHitRadius: 10,
 			pointBorderWidth: 2,
 			// data: [0,300, 400, 500, 200]
-			data: ['0','0',
+			data: ['0','0','0','0','0',
 				<?php
 					foreach ($get_omset as $data) {
 						echo "" .$data->omset.",";

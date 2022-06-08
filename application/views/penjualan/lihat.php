@@ -19,6 +19,7 @@
 						<h1 class="h3 m-0 text-gray-800"><?= $title ?></h1>
 					</div>
 					<div class="float-right">
+						<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalCenter_excel"><i class="fa fa-file-excel"></i>&nbsp;&nbsp;Export</button>
 						<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Export</button>
 						<!-- <a href="<?= base_url('penjualan/export') ?>" class="btn btn-danger btn-sm"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Export</a> -->
 						<a href="<?= base_url('penjualan/tambah') ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah</a>
@@ -92,19 +93,55 @@
 			<?php $this->load->view('partials/footer.php') ?>
 		</div>
 	</div>
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<!-- Modal Export Excel-->
+	<div class="modal fade" id="exampleModalCenter_excel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
-				<form  action="<?= base_url('penjualan/export') ?>" method="POST">
+				<form  action="<?= base_url('penjualan/export_excel') ?>" method="POST">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Cetak Laporan Penjualan</h5>
+					<h5 class="modal-title" id="exampleModalLongTitle">Cetak Laporan Penjualan (Excel)</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
+					<label for="tahun_excel"><strong>Tahun</strong></label>
+					<select class="form-control" name="tahun_excel" id='tahun_excel'>
+						<option selected="selected" disabled="disabled" value="" selected>Pilih Tahun</option>
+							<?php foreach ($get_tahun as $tahun): ?>
+								<option value="<?= $tahun->tahun ?>"><?= $tahun->tahun ?></option>
+							<?php endforeach ?>
+					</select>
+					<label for="bulan_excel" style="margin-top: 10px;"><strong>Bulan</strong></label>
+					<select class="form-control" name="bulan_excel" id='bulan_excel'>
+						<option selected="selected" disabled="disabled" value="" selected>Pilih Bulan</option>
+					</select>
+					<label for="tanggal_excel" style="margin-top: 10px;"><strong>Tanggal</strong></label>
+					<select class="form-control" name="tanggal_excel" id='tanggal_excel'>
+						<option selected="selected" disabled="disabled" value="" selected>Pilih Tanggal</option>
+					</select>
 					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Cetak</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Export PDF -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<form  action="<?= base_url('penjualan/export') ?>" method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Cetak Laporan Penjualan (PDF)</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
 					<label for="tahun"><strong>Tahun</strong></label>
 					<select class="form-control" name="tahun" id='tahun'>
 						<option selected="selected" disabled="disabled" value="" selected>Pilih Tahun</option>
@@ -143,6 +180,51 @@
 		$('#myModal').on('shown.bs.modal', function () {
 			$('#myInput').trigger('focus')
 		})
+		// Modal Export Excel
+		$("#tahun_excel").change(function(){
+			// variabel dari nilai combo box kendaraan
+			var tahun = $("#tahun_excel").val();
+			// Menggunakan ajax untuk mengirim dan dan menerima data dari server
+			$.ajax({
+				url : "<?=base_url('penjualan')?>/get_bulan",
+				method : "POST",
+				data : {tahun:tahun},
+				async : false,
+				dataType : 'json',
+				success: function(data){
+					var html = '<option selected="selected" disabled="disabled" value="" selected>Pilih Bulan</option>';
+					var i;
+
+					for(i=0; i<data.length; i++){
+						html += '<option value='+data[i].bulan+'>'+data[i].bulan+'</option>';
+					}
+					$('#bulan_excel').html(html);
+				}
+			});
+		});
+		$("#bulan_excel").change(function(){
+			// variabel dari nilai combo box kendaraan
+			var tahun = $("#tahun_excel").val();
+			var bulan = $("#bulan_excel").val();
+			// Menggunakan ajax untuk mengirim dan dan menerima data dari server
+			$.ajax({
+				url : "<?=base_url('penjualan')?>/get_tanggal",
+				method : "POST",
+				data : {tahun:tahun, bulan:bulan},
+				async : false,
+				dataType : 'json',
+				success: function(data){
+					var html = '<option selected="selected" disabled="disabled" value="" selected>Pilih Tanggal</option>';
+					var i;
+
+					for(i=0; i<data.length; i++){
+						html += '<option value='+data[i].tanggal+'>'+data[i].tanggal+'</option>';
+					}
+					$('#tanggal_excel').html(html);
+				}
+			});
+		});
+		// MODAL export PDF
 		$("#tahun").change(function(){
 			// variabel dari nilai combo box kendaraan
 			var tahun = $("#tahun").val();

@@ -1,6 +1,8 @@
 <?php
 
 use Dompdf\Dompdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Penjualan extends CI_Controller {
 	public function __construct(){
@@ -336,5 +338,56 @@ class Penjualan extends CI_Controller {
 		$dompdf->load_html($html);
 		$dompdf->render();
 		$dompdf->stream('Struk Transaksi Thermal ' . $no_penjualan, array("Attachment" => false));
+	}
+
+	public function export_excel()
+	{
+		$spreadsheet = new Spreadsheet();
+    	$sheet = $spreadsheet->getActiveSheet();
+
+		$tanggal = $this->input->post('tanggal_excel');
+		$bulan = $this->input->post('bulan_excel');
+		$tahun  = $this->input->post('tahun_excel');
+		$info = $tanggal." ".$bulan." ".$tahun;
+
+		$data = $this->m_penjualan->lihat_join_pelanggan_by_date($tahun, $bulan, $tanggal);
+
+		$spreadsheet->setActiveSheetIndex(0)
+					->setCellValue('A1', 'No')
+					->setCellValue('A1', 'No Penjualan')
+					->setCellValue('B1', 'Customer')
+					->setCellValue('C1', 'Kasir')
+					->setCellValue('D1', 'Tanggal')
+					->setCellValue('E1', 'Jam')
+					->setCellValue('F1', 'Sub Total')
+					->setCellValue('G1', 'Diskon (%)')
+					->setCellValue('H1', 'Total');
+		
+		$kolom = 2;
+		$nomor = 1;
+
+		foreach($data as $penjualan) {
+
+			$spreadsheet->setActiveSheetIndex(0)
+						->setCellValue('A' . $kolom, $nomor)
+						->setCellValue('B' . $kolom, $penjualan->no_penjualan)
+						->setCellValue('C' . $kolom, $penjualan->nama_pelanggan)
+						->setCellValue('D' . $kolom, $penjualan->tgl_penjualan)
+						->setCellValue('E' . $kolom, $penjualan->jam_penjualan)
+						->setCellValue('F' . $kolom, $penjualan->total)
+						->setCellValue('G' . $kolom, $penjualan->diskon)
+						->setCellValue('H' . $kolom, $penjualan->jumlah_total);
+
+			$kolom++;
+			$nomor++;
+	   }
+
+	   $writer = new Xlsx($spreadsheet);
+
+        header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="Penjualan '.$info.'.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
 	}
 }

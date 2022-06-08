@@ -49,7 +49,7 @@
 										</div>
 									<?php endif ?>
 									<div class="text-center">
-									<img  src="<?php echo base_url('/sb-admin/img/logo_sample.png'); ?>" width="200px" />
+									<img  src="<?php echo base_url('/sb-admin/img/logo_sasay.png'); ?>" width="200px" />
 										<!-- <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1> -->
 									</div>
 									<form class="user" method="POST" action="<?= base_url('login/proses_login') ?>">
