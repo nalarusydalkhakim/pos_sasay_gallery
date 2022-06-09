@@ -95,6 +95,15 @@
 								<td>Bayar Kredit/Saldo: </td>
 								<td align="right"><?= strtoupper($penjualan->kredit_validation) ?></td>
 							</tr>
+							<tr>
+								<?php if ($penjualan->saldo < 0): ?>
+									<td>Hutang: </td>
+									<td align="right">Rp.<?= number_format($penjualan->saldo * -1, 0, ',', '.')  ?></td>
+								<?php elseif ($penjualan->saldo >= 0): ?>
+									<td>Saldo: </td>
+									<td align="right">Rp.<?= number_format($penjualan->saldo, 0, ',', '.')  ?></td>
+								<?php endif ?>
+							</tr>
 						<?php elseif ($penjualan->kredit_validation == "ya"):?>
 							<tr>
 								<td>Bayar Kredit/Saldo: </td>
@@ -114,8 +123,13 @@
 									<td align="right">Rp.<?= number_format($penjualan->pembayaran, 0, ',', '.') ?></td>
 								</tr>
 								<tr>
-									<td>Simpan Saldo: </td>
-									<td align="right">Rp.<?= number_format($penjualan->pembayaran - $penjualan->jumlah_total, 0, ',', '.')  ?></td>
+									<?php if ($penjualan->saldo < 0): ?>
+										<td>Hutang: </td>
+										<td align="right">Rp.<?= number_format($penjualan->saldo * -1, 0, ',', '.')  ?></td>
+									<?php elseif ($penjualan->saldo >= 0): ?>
+										<td>Saldo: </td>
+										<td align="right">Rp.<?= number_format($penjualan->saldo, 0, ',', '.')  ?></td>
+									<?php endif ?>
 								</tr>
 							<?php elseif ($penjualan->sistem_pembayaran == "tunai"): ?>
 								<tr>
@@ -123,8 +137,13 @@
 									<td align="right">Rp.<?= number_format($penjualan->pembayaran, 0, ',', '.') ?></td>
 								</tr>
 								<tr>
-									<td>Simpan Saldo: </td>
-									<td align="right">Rp.<?= number_format($penjualan->pembayaran - $penjualan->jumlah_total, 0, ',', '.') ?></td>
+									<?php if ($penjualan->saldo < 0): ?>
+										<td>Hutang: </td>
+										<td align="right">Rp.<?= number_format($penjualan->saldo * -1, 0, ',', '.')  ?></td>
+									<?php elseif ($penjualan->saldo >= 0): ?>
+										<td>Saldo: </td>
+										<td align="right">Rp.<?= number_format($penjualan->saldo, 0, ',', '.')  ?></td>
+									<?php endif ?>
 								</tr>
 							<?php endif ?>
 						<?php endif ?>

@@ -17,7 +17,7 @@
 <body style="margin: 0px;">
 	<div class="row" style="text-align: center; margin: 0px;">
 		<div class="col text-center">
-		<img  class="fas" src="<?php echo base_url('/sb-admin/img/logo_ghina_white_2.png'); ?>" />
+		<!-- <img  class="fas" src="<?php echo base_url('/sb-admin/img/logo_ghina_white_2.png'); ?>" /> -->
 			<h2 class="h4 text-dark "><?= $data_toko->nama_toko ?></h2>
 			<p><?= $data_toko->alamat?> Telp: <?= $data_toko->no_telepon?></p>
 		</div>
@@ -111,6 +111,15 @@
 								<td colspan="6">Bayar Kredit/Saldo: </td>
 								<td><?= strtoupper($penjualan->kredit_validation) ?></td>
 							</tr>
+							<tr>
+								<?php if ($penjualan->saldo < 0): ?>
+									<td colspan="6">Hutang: </td>
+									<td>Rp.<?= number_format($penjualan->saldo * -1, 0, ',', '.')  ?></td>
+								<?php elseif ($penjualan->saldo >= 0): ?>
+									<td colspan="6">Saldo: </td>
+									<td>Rp.<?= number_format($penjualan->saldo, 0, ',', '.')  ?></td>
+								<?php endif ?>
+							</tr>
 						<?php elseif ($penjualan->kredit_validation == "ya"):?>
 							<tr>
 								<td colspan="6">Bayar Kredit/Saldo: </td>
@@ -130,8 +139,13 @@
 									<td>Rp. <?= number_format($penjualan->pembayaran, 0, ',', '.') ?></td>
 								</tr>
 								<tr>
-									<td colspan="6">Simpan Saldo: </td>
-									<td>Rp. <?= number_format($penjualan->pembayaran - $penjualan->jumlah_total, 0, ',', '.')  ?></td>
+									<?php if ($penjualan->saldo < 0): ?>
+										<td colspan="6">Hutang: </td>
+										<td>Rp.<?= number_format($penjualan->saldo * -1, 0, ',', '.')  ?></td>
+									<?php elseif ($penjualan->saldo >= 0): ?>
+										<td colspan="6">Saldo: </td>
+										<td>Rp.<?= number_format($penjualan->saldo, 0, ',', '.')  ?></td>
+									<?php endif ?>
 								</tr>
 							<?php elseif ($penjualan->sistem_pembayaran == "tunai"): ?>
 								<tr>
@@ -139,8 +153,13 @@
 									<td>Rp. <?= number_format($penjualan->pembayaran, 0, ',', '.') ?></td>
 								</tr>
 								<tr>
-									<td colspan="6">Simpan Saldo: </td>
-									<td>Rp. <?= number_format($penjualan->pembayaran - $penjualan->jumlah_total, 0, ',', '.') ?></td>
+									<?php if ($penjualan->saldo < 0): ?>
+										<td colspan="6">Hutang: </td>
+										<td>Rp.<?= number_format($penjualan->saldo * -1, 0, ',', '.')  ?></td>
+									<?php elseif ($penjualan->saldo >= 0): ?>
+										<td colspan="6">Saldo: </td>
+										<td>Rp.<?= number_format($penjualan->saldo, 0, ',', '.')  ?></td>
+									<?php endif ?>
 								</tr>
 							<?php endif ?>
 						<?php endif ?>
