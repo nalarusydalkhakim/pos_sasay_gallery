@@ -33,7 +33,10 @@ class Laporan extends CI_Controller {
 			//pendapatan terbanyak
 			$this->data['pendapatan_terbanyak'] = $this->m_pelanggan->pendapatan_member_bulan($tahun, $bulan);
 			$this->data['jumlah_pendapatan_terbanyak'] = $this->m_pelanggan->jumlah_pendapatan_member_bulan($tahun, $bulan);
+			// penjualan kasir
+			$this->data['penjualan_kasir'] = $this->m_penjualan->lihat_penjualan_kasir_bulanan($tahun, $bulan);
 			//line chart
+			$this->data['brand_terlaris_bulanan'] = $this->m_detail_penjualan->brand_terlaris_bulanan($tahun, $bulan);
 			$this->data['get_omset'] = $this->m_penjualan->get_omset_hari($tahun, $bulan);
 		} else {
 			$bulan = date('m');
@@ -49,10 +52,13 @@ class Laporan extends CI_Controller {
 			//pendapatan terbanyak
 			$this->data['pendapatan_terbanyak'] = $this->m_pelanggan->pendapatan_member_bulan($tahun, $bulan);
 			$this->data['jumlah_pendapatan_terbanyak'] = $this->m_pelanggan->jumlah_pendapatan_member_bulan($tahun, $bulan);
+			// penjualan kasir
+			$this->data['penjualan_kasir'] = $this->m_penjualan->lihat_penjualan_kasir_bulanan($tahun, $bulan);
 			//line chart
+			$this->data['brand_terlaris_bulanan'] = $this->m_detail_penjualan->brand_terlaris_bulanan($tahun, $bulan);
 			$this->data['get_omset'] = $this->m_penjualan->get_omset_hari($tahun, $bulan);
 		}
-		// print_r($this->data['get_omset']);
+		// print_r($this->data['penjualan_kasir']);
 		$this->data['get_tahun'] = $this->m_penjualan->get_tahun();
 		$this->load->view('laporan/bulanan', $this->data);
 	}
@@ -71,7 +77,11 @@ class Laporan extends CI_Controller {
 			//pendapatan terbanyak
 			$this->data['pendapatan_terbanyak'] = $this->m_pelanggan->pendapatan_member_tahun($tahun);
 			$this->data['jumlah_pendapatan_terbanyak'] = $this->m_pelanggan->jumlah_pendapatan_member_tahun($tahun);
+			// penjualan kasir
+			$this->data['penjualan_kasir'] = $this->m_penjualan->lihat_penjualan_kasir_tahunan($tahun);
 			//line chart
+			//line chart
+			$this->data['brand_terlaris'] = $this->m_detail_penjualan->brand_terlaris_tahunan($tahun);
 			$this->data['get_omset'] = $this->m_penjualan->get_omset_bulan($tahun);
 		} else {
 			$tahun= date('Y');
@@ -85,7 +95,10 @@ class Laporan extends CI_Controller {
 			//pendapatan terbanyak
 			$this->data['pendapatan_terbanyak'] = $this->m_pelanggan->pendapatan_member_tahun($tahun);
 			$this->data['jumlah_pendapatan_terbanyak'] = $this->m_pelanggan->jumlah_pendapatan_member_tahun($tahun);
+			// penjualan kasir
+			$this->data['penjualan_kasir'] = $this->m_penjualan->lihat_penjualan_kasir_tahunan($tahun);
 			//line chart
+			$this->data['brand_terlaris'] = $this->m_detail_penjualan->brand_terlaris_tahunan($tahun);
 			$this->data['get_omset'] = $this->m_penjualan->get_omset_bulan($tahun);
 		}
 		$this->data['get_tahun'] = $this->m_penjualan->get_tahun();

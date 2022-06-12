@@ -354,14 +354,20 @@ class Penjualan extends CI_Controller {
 
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A1', 'No')
-					->setCellValue('A1', 'No Penjualan')
-					->setCellValue('B1', 'Customer')
-					->setCellValue('C1', 'Kasir')
-					->setCellValue('D1', 'Tanggal')
-					->setCellValue('E1', 'Jam')
-					->setCellValue('F1', 'Sub Total')
-					->setCellValue('G1', 'Diskon (%)')
-					->setCellValue('H1', 'Total');
+					->setCellValue('B1', 'No Penjualan')
+					->setCellValue('C1', 'Customer')
+					->setCellValue('D1', 'Kasir')
+					->setCellValue('E1', 'Tanggal')
+					->setCellValue('F1', 'Jam')
+					->setCellValue('G1', 'Sub Total')
+					->setCellValue('H1', 'Diskon (%)')
+					->setCellValue('I1', 'Total')
+					->setCellValue('J1', 'Metode Pembayaran')
+					->setCellValue('K1', 'Bayar Kredit?')
+					->setCellValue('L1', 'Sistem Pembayaran')
+					->setCellValue('M1', 'Bank')
+					->setCellValue('N1', 'Nominal Pembayaran')
+					->setCellValue('O1', 'Keterangan');
 		
 		$kolom = 2;
 		$nomor = 1;
@@ -372,11 +378,17 @@ class Penjualan extends CI_Controller {
 						->setCellValue('A' . $kolom, $nomor)
 						->setCellValue('B' . $kolom, $penjualan->no_penjualan)
 						->setCellValue('C' . $kolom, $penjualan->nama_pelanggan)
-						->setCellValue('D' . $kolom, $penjualan->tgl_penjualan)
-						->setCellValue('E' . $kolom, $penjualan->jam_penjualan)
-						->setCellValue('F' . $kolom, $penjualan->total)
-						->setCellValue('G' . $kolom, $penjualan->diskon)
-						->setCellValue('H' . $kolom, $penjualan->jumlah_total);
+						->setCellValue('D' . $kolom, $penjualan->nama_kasir)
+						->setCellValue('E' . $kolom, $penjualan->tgl_penjualan)
+						->setCellValue('F' . $kolom, $penjualan->jam_penjualan)
+						->setCellValue('G' . $kolom, $penjualan->total)
+						->setCellValue('H' . $kolom, $penjualan->diskon)
+						->setCellValue('I' . $kolom, $penjualan->jumlah_total)
+						->setCellValue('J' . $kolom, $penjualan->metode_pembayaran)
+						->setCellValue('K' . $kolom, $penjualan->kredit_validation)
+						->setCellValue('L' . $kolom, $penjualan->sistem_pembayaran)
+						->setCellValue('M' . $kolom, $penjualan->kode_bank)
+						->setCellValue('N' . $kolom, $penjualan->pembayaran);
 
 			$kolom++;
 			$nomor++;

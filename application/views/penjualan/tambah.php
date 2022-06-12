@@ -86,13 +86,13 @@
 											<label>Hutang</label>
 											<input type="text" name="hutang_customer" id="hutang_customer" value="" readonly class="form-control">
 										</div>
-										<div class="form-group col-md-2">
+										<!-- <div class="form-group col-md-2">
 											<label>Gunakan Barcode</label><br>
 											<label class="switch">
 												<input type="checkbox" id="use_barcode" name="use_barcode" value="false">
 												<span class="slider round"></span>
 											</label>
-										</div>
+										</div> -->
 										<!-- <div class="form-group col-md-2">
 											<label>Gunakan Saldo</label><br>
 											<label class="switch">
@@ -511,18 +511,26 @@
 					$('#kembalian_row').hide()
 					$('#saldo_row').hide()
 					$('#transfer_row').hide()
+					$("#sistem_pembayaran").prop('required',true);	
 					if (sistem_pembayaran == 'tunai') {
 						$('#pembayaran_row').show()
 						$('#kembalian_row').show()
 						$('#saldo_row').hide()
 						$('#kredit_validation_row').hide()
-						$('#transfer_row').hide()	
+						$('#transfer_row').hide()
+						$("#pembayaran").prop('required',true)
+						$("#kode_bank").prop('required',false)
+						$("#kode_bank").val("")
 					}else if(sistem_pembayaran == "transfer"){
 						$('#pembayaran_row').hide()
 						$('#kembalian_row').hide()
 						$('#saldo_row').hide()
 						$('#kredit_validation_row').hide()
 						$('#transfer_row').show()
+						$("#pembayaran").prop('required',false)
+						$("#kode_bank").prop('required',true)
+						$("#pembayaran").val("")
+						$('#kembalian').html('')
 					}
 				}else if(metode_pembayaran == "kredit"){
 					$('#kredit_validation_row').show()
@@ -531,6 +539,7 @@
 					$('#kembalian_row').hide()
 					$('#saldo_row').hide()
 					$('#transfer_row').hide()
+					$("#kredit_validation").prop('required',true);	
 					if ($('#kredit_validation').val() = 'ya') {
 						$('#sistem_pembayaran_row').show()
 						if (sistem_pembayaran == 'tunai') {
@@ -563,13 +572,20 @@
 						$('#kembalian_row').show()
 						$('#saldo_row').hide()
 						$('#kredit_validation_row').hide()
-						$('#transfer_row').hide()	
+						$('#transfer_row').hide()
+						$("#pembayaran").prop('required',true);
+						$("#kode_bank").prop('required',false);
+						$("#kode_bank").val("");
 					}else if(sistem_pembayaran == "transfer"){
 						$('#pembayaran_row').hide()
 						$('#kembalian_row').hide()
 						$('#saldo_row').hide()
 						$('#kredit_validation_row').hide()
 						$('#transfer_row').show()
+						$("#pembayaran").prop('required',false);
+						$("#kode_bank").prop('required',true);
+						$("#pembayaran").val("");
+						$('#kembalian').html('')
 					}
 				}else if(metode_pembayaran == "kredit"){
 					if (kredit_validation = 'ya') {

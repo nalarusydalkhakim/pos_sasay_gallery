@@ -8,41 +8,39 @@
 	<div id="wrapper">
 		<!-- load sidebar -->
 		<?php $this->load->view('partials/sidebar.php') ?>
-
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div id="content" data-url="<?= base_url('laporan') ?>">
 				<!-- load Topbar -->
 				<?php $this->load->view('partials/topbar.php') ?>
-
 				<div class="container-fluid">
-				<div class="clearfix">
-					<div class="float-left">
-						<h1 class="h3 m-0 text-gray-800"><?= $title ?> (<?= $omset_tahunan->tanggal ?>)</h1>
+					<div class="clearfix">
+						<div class="float-left">
+							<h1 class="h3 m-0 text-gray-800"><?= $title ?> (<?= $omset_tahunan->tanggal ?>)</h1>
+						</div>
+						<div class="float-right">
+							<form class="form-inline" action="<?= base_url('laporan/tahunan') ?>" method="post">
+							<!-- <p id='demo'>pp</p> -->
+								<select class="form-control" name="tahun" id='tahun'>
+									<option selected="selected" disabled="disabled" value="" selected>Pilih Tahun</option>
+									<?php foreach ($get_tahun as $tahun): ?>
+										<option value="<?= $tahun->tahun ?>"><?= $tahun->tahun ?></option>
+									<?php endforeach ?>
+								</select>
+								<button type="submit" class="btn btn-primary" style="margin-left:5px"><i class="fa fa-search"></i></button>
+								<a href="<?= base_url('laporan/tahunan') ?>" class="btn btn-success" style="margin-left:3px"><i class="fa fa-reply"></i></a>
+								<button type="button" class="btn btn-danger btn-sm" style="margin-left:5px;" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Cetak Laba Rugi</button>
+							</form>
+						</div>
 					</div>
-					<div class="float-right">
-						<form class="form-inline" action="<?= base_url('laporan/tahunan') ?>" method="post">
-						<!-- <p id='demo'>pp</p> -->
-							<select class="form-control" name="tahun" id='tahun'>
-								<option selected="selected" disabled="disabled" value="" selected>Pilih Tahun</option>
-								<?php foreach ($get_tahun as $tahun): ?>
-									<option value="<?= $tahun->tahun ?>"><?= $tahun->tahun ?></option>
-								<?php endforeach ?>
-							</select>
-							<button type="submit" class="btn btn-primary" style="margin-left:5px"><i class="fa fa-search"></i></button>
-							<a href="<?= base_url('laporan/tahunan') ?>" class="btn btn-success" style="margin-left:3px"><i class="fa fa-reply"></i></a>
-							<button type="button" class="btn btn-danger btn-sm" style="margin-left:5px;" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp;Cetak Laba Rugi</button>
-						</form>
-					</div>
-				</div>
-				<hr>
-				<?php if ($this->session->flashdata('success')) : ?>
+					<hr>
+					<?php if ($this->session->flashdata('success')) : ?>
 					<div class="alert alert-success alert-dismissible fade show" role="alert">
 						<?= $this->session->flashdata('success') ?>
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-				<?php elseif($this->session->flashdata('error')) : ?>
+					<?php elseif($this->session->flashdata('error')) : ?>
 					<div class="alert alert-danger alert-dismissible fade show" role="alert">
 						<?= $this->session->flashdata('error') ?>
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -50,85 +48,85 @@
 						</button>
 					</div>
 				<?php endif ?>
+
 				<div class="row">
-
-		            <!-- Earnings (total) Card Example -->
-		            <div class="col-xl-3 col-md-6 mb-4">
-		              <div class="card border-left-primary shadow h-100 py-2">
-		                <div class="card-body">
-		                 	 <div class="row no-gutters align-items-center">
-						  		<div class="col mr-2">
-									<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Omset Penjualan</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">Rp <?= number_format($omset_tahunan->omset, 0, ',', '.') ?></div>
-								</div>
+					<!-- Earnings (total) Card Example -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<div class="card border-left-primary shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Omset Penjualan</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800">Rp <?= number_format($omset_tahunan->omset, 0, ',', '.') ?></div>
+									</div>
 									<div class="col-auto">
-									<i class="fas fa-coins fa-2x text-gray-300"></i>
+										<i class="fas fa-coins fa-2x text-gray-300"></i>
+									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+
+		            <!-- Earnings (Monthly) Card Example -->
+		            <div class="col-xl-3 col-md-6 mb-4">
+		              	<div class="card border-left-success shadow h-100 py-2">
+		                	<div class="card-body">
+		                  		<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pengeluaran</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($pengeluaran_tahunan->total, 0, ',', '.')?></div>
+									</div>
+										<div class="col-auto">
+										<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+									</div>
+		                  		</div>
+		                	</div>
+		              	</div>
+		            </div>
+
+		            <!-- Earnings (Monthly) Card Example -->
+		            <div class="col-xl-3 col-md-6 mb-4">
+		              	<div class="card border-left-info shadow h-100 py-2">
+		                	<div class="card-body">
+		                  		<div class="row no-gutters align-items-center">
+		                    		<div class="col mr-2">
+										<?php $laba =  $omset_tahunan->omset - $pengeluaran_tahunan->total - $harga_pokok->hpp?>
+		                      			<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Laba Penjualan</div>
+		                      			<div class="row no-gutters align-items-center">
+		                        			<div class="col-auto">
+		                          				<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= number_format($laba, 0, ',', '.') ?></div>
+		                        			</div>
+		                      			</div>
+		                    		</div>
+		                    	<div class="col-auto">
+		                      		<i class="fas fa-file-invoice fa-2x text-gray-300"></i>
+		                    	</div>
 		                  	</div>
-		                </div>
-		              </div>
-		            </div>
-
-		            <!-- Earnings (Monthly) Card Example -->
-		            <div class="col-xl-3 col-md-6 mb-4">
-		              <div class="card border-left-success shadow h-100 py-2">
-		                <div class="card-body">
-		                  <div class="row no-gutters align-items-center">
-						  		<div class="col mr-2">
-									<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pengeluaran</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($pengeluaran_tahunan->total, 0, ',', '.')?></div>
-								</div>
-									<div class="col-auto">
-									<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-								</div>
-		                  </div>
-		                </div>
-		              </div>
-		            </div>
-
-		            <!-- Earnings (Monthly) Card Example -->
-		            <div class="col-xl-3 col-md-6 mb-4">
-		              <div class="card border-left-info shadow h-100 py-2">
-		                <div class="card-body">
-		                  <div class="row no-gutters align-items-center">
-		                    <div class="col mr-2">
-								<?php $laba =  $omset_tahunan->omset - $pengeluaran_tahunan->total - $harga_pokok->hpp?>
-		                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Laba Penjualan</div>
-		                      <div class="row no-gutters align-items-center">
-		                        <div class="col-auto">
-		                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= number_format($laba, 0, ',', '.') ?></div>
-		                        </div>
-		                      </div>
-		                    </div>
-		                    <div class="col-auto">
-		                      <i class="fas fa-file-invoice fa-2x text-gray-300"></i>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
+		                	</div>
+		              	</div>
 		            </div>
 
 		            <!-- Pending Requests Card Example -->
 		            <div class="col-xl-3 col-md-6 mb-4">
-		              <div class="card border-left-warning shadow h-100 py-2">
-		                <div class="card-body">
-		                  <div class="row no-gutters align-items-center">
-		                    <div class="col mr-2">
-		                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Hutang</div>
-		                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($total_hutang->hutang, 0, ',', '.') ?></div>
-		                    </div>
-		                    <div class="col-auto">
-		                      <i class="fas fa-box fa-2x text-gray-300"></i>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
+		              	<div class="card border-left-warning shadow h-100 py-2">
+		                	<div class="card-body">
+		                  		<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Hutang</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($total_hutang->hutang, 0, ',', '.') ?></div>
+									</div>
+									<div class="col-auto">
+										<i class="fas fa-box fa-2x text-gray-300"></i>
+									</div>
+		                  		</div>
+		                	</div>
+		              	</div>
 					</div>
-					<!-- end of card -->
-				  </div>
+				</div>
+				<!-- end of card -->
 
-				  <!-- Content Row -->
-				  <div class="row">
+				<!-- Content Row -->
+				<div class="row">
 					<!-- Content Column -->
 					<div class="col-lg-6 mb-4">
 						<!-- Project Card Example -->
@@ -165,36 +163,70 @@
 							</div>
 						</div>
 					</div>
-				  </div>
-				  <div class="col-xl-12 col-lg-6">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Grafik Pendapatan</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-										<canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-						</div>				  
+				</div>
+				<!-- end of card -->
+				<!-- Bar Chart -->
+				<div class="row">
+					<div class="col-xl-8 col-lg-6">
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">Grafik Pendapatan Brand</h6>
+							</div>
+							<div class="card-body">
+								<div class="chart-bar">
+									<canvas id="myBarChart"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-6">
+						<!-- Project Card Example -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">Perolehan Kasir</h6>
+							</div>
+							<div class="card-body">
+								<?php foreach ($penjualan_kasir as $penjualan): ?>
+									<?php $presentase = ($penjualan->penjualan/$jumlah_pendapatan_terbanyak->pendapatan) * 100;?>
+									<h4 class="small font-weight-bold"><?= $penjualan->nama_kasir ?> <span class="float-right">Rp. <?= number_format($penjualan->penjualan, 0, ',', '.')?></span></h4>
+									<div class="progress mb-4">
+										<div class="progress-bar bg-primary" role="progressbar" style="width: <?= $presentase?>%" aria-valuenow="<?= $presentase?>" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+								<?php endforeach ?>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Line Chart -->
+				<div class="col-xl-12 col-lg-6">
+					<div class="card shadow mb-4">
+						<!-- Card Header - Dropdown -->
+						<div
+							class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+							<h6 class="m-0 font-weight-bold text-primary">Grafik Pendapatan</h6>
+							<div class="dropdown no-arrow">
+								<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+									aria-labelledby="dropdownMenuLink">
+									<div class="dropdown-header">Dropdown Header:</div>
+									<a class="dropdown-item" href="#">Action</a>
+									<a class="dropdown-item" href="#">Another action</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">Something else here</a>
+								</div>
+							</div>
+						</div>
+						<!-- Card Body -->
+						<div class="card-body">
+							<div class="chart-area">
+								<canvas id="myAreaChart"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>				  
 			</div>
 		</div>
 		<!-- load footer -->
@@ -206,26 +238,25 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<form  action="<?= base_url('laporan/export_laba_rugi_tahunan') ?>" method="POST">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Cetak Laporan Laba Rugi</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					
-					<label for="modal_tahun"><strong>Tahun</strong></label>
-					<select class="form-control" name="modal_tahun" id='modal_tahun'>
-						<option selected="selected" disabled="disabled" value="" selected>Pilih Tahun</option>
-							<?php foreach ($get_tahun as $tahun): ?>
-								<option value="<?= $tahun->tahun ?>"><?= $tahun->tahun ?></option>
-							<?php endforeach ?>
-					</select>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Cetak</button>
-				</div>
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Cetak Laporan Laba Rugi</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<label for="modal_tahun"><strong>Tahun</strong></label>
+						<select class="form-control" name="modal_tahun" id='modal_tahun'>
+							<option selected="selected" disabled="disabled" value="" selected>Pilih Tahun</option>
+								<?php foreach ($get_tahun as $tahun): ?>
+									<option value="<?= $tahun->tahun ?>"><?= $tahun->tahun ?></option>
+								<?php endforeach ?>
+						</select>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Cetak</button>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -284,14 +315,14 @@
 			datasets: [{
 			label: "Pendapatan",
 			lineTension: 0.3,
-			backgroundColor: "rgba(5, 120, 123, 0.05)",
-			borderColor: "rgba(5, 120, 123, 1)",
+			backgroundColor: "rgba(78, 115, 223, 0.5)",
+			borderColor: "rgba(78, 115, 223, 1)",
 			pointRadius: 3,
-			pointBackgroundColor: "rgba(5, 120, 123, 1)",
-			pointBorderColor: "rgba(5, 120, 123, 1)",
+			pointBackgroundColor: "rgba(78, 115, 223, 1)",
+			pointBorderColor: "rgba(78, 115, 223, 1)",
 			pointHoverRadius: 3,
-			pointHoverBackgroundColor: "rgba(5, 120, 123, 1)",
-			pointHoverBorderColor: "rgba(5, 120, 123, 1)",
+			pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+			pointHoverBorderColor: "rgba(78, 115, 223, 1)",
 			pointHitRadius: 10,
 			pointBorderWidth: 2,
 			// data: [0,300, 400, 500, 200]
@@ -299,6 +330,109 @@
 				<?php
 					foreach ($get_omset as $data) {
 						echo "" .$data->omset.",";
+					}
+          		?>
+			]
+			}],
+		},
+		options: {
+			maintainAspectRatio: false,
+			layout: {
+			padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			}
+			},
+			scales: {
+			xAxes: [{
+				time: {
+				unit: 'date'
+				},
+				gridLines: {
+				display: false,
+				drawBorder: false
+				},
+				ticks: {
+				maxTicksLimit: 32
+				}
+			}],
+			yAxes: [{
+				ticks: {
+				maxTicksLimit: 8,
+				padding: 10,
+				// Include a dollar sign in the ticks
+				callback: function(value, index, values) {
+					return 'Rp. ' + number_format(value);
+				}
+				},
+				gridLines: {
+				color: "rgb(234, 236, 244)",
+				zeroLineColor: "rgb(234, 236, 244)",
+				drawBorder: false,
+				borderDash: [2],
+				zeroLineBorderDash: [2]
+				}
+			}],
+			},
+			legend: {
+			display: false
+			},
+			tooltips: {
+				backgroundColor: "rgb(255,255,255)",
+				bodyFontColor: "#858796",
+				titleMarginBottom: 10,
+				titleFontColor: '#6e707e',
+				titleFontSize: 14,
+				borderColor: '#dddfeb',
+				borderWidth: 1,
+				xPadding: 15,
+				yPadding: 15,
+				displayColors: false,
+				intersect: false,
+				mode: 'index',
+				caretPadding: 10,
+				callbacks: {
+					label: function(tooltipItem, chart) {
+					var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+					return datasetLabel + ': Rp. ' + number_format(tooltipItem.yLabel);
+					}
+				}
+			}
+		}
+		});
+
+		// Chart Pendapatan Brand
+		var ctx = document.getElementById("myBarChart");
+		var myLineChart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: [
+				<?php
+					foreach ($brand_terlaris as $data) {
+						echo '"' .$data->nama_brand.'",';
+					}
+          		?>
+			],
+			datasets: [{
+			label: "Pendapatan",
+			lineTension: 0.3,
+			backgroundColor: "rgba(78, 115, 223, 0.5)",
+			borderColor: "rgba(78, 115, 223, 1)",
+			pointRadius: 3,
+			pointBackgroundColor: "rgba(78, 115, 223, 1)",
+			pointBorderColor: "rgba(78, 115, 223, 1)",
+			pointHoverRadius: 3,
+			pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+			pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+			pointHitRadius: 10,
+			pointBorderWidth: 2,
+			// data: [0,300, 400, 500, 200]
+			data: [
+				<?php
+					foreach ($brand_terlaris as $data) {
+						echo "" .$data->kuantitas.",";
 					}
           		?>
 			]

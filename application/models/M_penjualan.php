@@ -197,6 +197,27 @@ class M_penjualan extends CI_Model {
 		return $query->row();
 	}
 
+	public function lihat_penjualan_kasir_bulanan($tahun, $bulan){
+		$this->db->select('nama_kasir, SUM(jumlah_total) as penjualan');
+		$this->db->from($this->_table);
+		$this->db->where(['DATE_FORMAT(tgl_penjualan, "%Y") ='=> $tahun]);
+		$this->db->where(['DATE_FORMAT(tgl_penjualan, "%m") ='=> $bulan]);
+		$this->db->group_by('nama_kasir');
+		$this->db->order_by('penjualan', 'DESC');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function lihat_penjualan_kasir_tahunan($tahun){
+		$this->db->select('nama_kasir, SUM(jumlah_total) as penjualan');
+		$this->db->from($this->_table);
+		$this->db->where(['DATE_FORMAT(tgl_penjualan, "%Y") ='=> $tahun]);
+		$this->db->group_by('nama_kasir');
+		$this->db->order_by('penjualan', 'DESC');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function lihat_no_penjualan($no_penjualan){
 		return $this->db->get_where($this->_table, ['no_penjualan' => $no_penjualan])->row();
 	}
